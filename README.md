@@ -411,10 +411,13 @@ sequence passed to it.
 
     .del.children {
       @node .logic.let;
+      @node .logic.emit;
+      @node .logic.item;
     }
-    .del.children {
-      .del.any-child;
-    }
+  }
+  
+  .del.node item {
+    .del.any-child;
   }
 
   /// A function that may be used in logic expressions.
@@ -607,6 +610,36 @@ The logic package also provides the following items:
     }
   }
 
+  /// Alterantive values.
+  .logic.module alternative {
+    /// left :: forall a. forall b. forall c.
+    ///   a -> (a -> c) -> (b -> c) -> c
+    .logic.let left {
+      @argument left;
+      @argument if-left;
+      @argument if-right;
+      @body (if-left left);
+    }
+
+    /// right :: forall a. forall b. forall c.
+    ///   b -> (a -> c) -> (b -> c) -> c
+    .logic.let left {
+      @argument right;
+      @argument if-left;
+      @argument if-right;
+      @body (if-right right);
+    }
+
+    /// case :: forall a. forall b. forall c.
+    ///   ((a -> c) -> (b -> c) -> c) -> (a -> c) -> (b -> c) -> c
+    .logic.let case {
+      @argument choice;
+      @argument if-left;
+      @argument if-right;
+      @body (choice if-left if-right);
+    }
+  }
+
   /// Optional values
   .logic.module option {
     /// some :: forall a. forall b. a -> (a -> b) -> b -> b
@@ -636,3 +669,8 @@ The logic package also provides the following items:
   }
 }
 ```
+
+Static analysis of the logic expressions can be used to determine if it
+is possible for the logic to produce an output that would fail to
+validate. For the purposes of this, miniumum and maximum repititions are
+ignored so `.del.children` will match any number of repeated elements.
