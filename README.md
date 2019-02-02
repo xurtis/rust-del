@@ -131,12 +131,12 @@ An object with many children could be represented using:
 ```
 object root {
   child a {
-		child x;
-		child y;
-		child z;
-	}
-	child b;
-	child c;
+    child x;
+    child y;
+    child z;
+  }
+  child b;
+  child c;
 }
 ```
 
@@ -150,162 +150,162 @@ A validation schema may be written in DEL as follows.
 ```del
 /// The schema for the DEL schema.
 schema del-schema {
-	/// A schema definition.
-	node schema {
-		/// A schema does not require a name but it may provide one.
-		@name required;
+  /// A schema definition.
+  node schema {
+    /// A schema does not require a name but it may provide one.
+    @name required;
 
-		children {
-			/// A node constructor may be used here.
-			@node ::del-schema::node;
-		}
-	}
+    children {
+      /// A node constructor may be used here.
+      @node ::del-schema::node;
+    }
+  }
 
-	/// A node object descriptor.
-	node node {
-		/// Every node must have a name.
-		@name required;
+  /// A node object descriptor.
+  node node {
+    /// Every node must have a name.
+    @name required;
 
-		/// A valid child in the node.
-		attribute name {
-			@value required;
-			@value optional;
-			@value dissalowed;
-		}
+    /// A valid child in the node.
+    attribute name {
+      @value required;
+      @value optional;
+      @value dissalowed;
+    }
 
-		ordered-children {
-			@attribute name;
-		}
-		children {
-			@node ::del-schema::attribute;
-		}
-		children {
-			@node ::del-schema::children;
-		}
-	}
+    ordered-children {
+      @attribute name;
+    }
+    children {
+      @node ::del-schema::attribute;
+    }
+    children {
+      @node ::del-schema::children;
+    }
+  }
 
-	/// An attribute descriptor.
-	node attribute {
-		/// Every attribute must be named.
-		@name required;
+  /// An attribute descriptor.
+  node attribute {
+    /// Every attribute must be named.
+    @name required;
 
-		/// The attribute may be left empty.
-		attribute no-value {
-			@no-value;
-		}
-		/// The attribute may have a text value.
-		attribute text-value {
-			@no-value;
-		}
-		/// The attribute may have an integer value.
-		attribute integer-value {
-			@no-value;
-		}
-		/// The attribute may have a floating-point value.
-		attribute float-value {
-			@no-value;
-		}
-		/// The attribute may have any identifier as a value.
-		attribute identifier-value {
-			@no-value;
-		}
-		/// The attribute may have a path as a value.
-		attribute path-value {
-			@no-value;
-		}
-		/// The attribute may have a token sequence as a value.
-		attribute token-value {
-			@no-value;
-		}
-		/// The attribute may have a value matching an exact token.
-		attribute value {
-			@identifier-value;
-		}
+    /// The attribute may be left empty.
+    attribute no-value {
+      @no-value;
+    }
+    /// The attribute may have a text value.
+    attribute text-value {
+      @no-value;
+    }
+    /// The attribute may have an integer value.
+    attribute integer-value {
+      @no-value;
+    }
+    /// The attribute may have a floating-point value.
+    attribute float-value {
+      @no-value;
+    }
+    /// The attribute may have any identifier as a value.
+    attribute identifier-value {
+      @no-value;
+    }
+    /// The attribute may have a path as a value.
+    attribute path-value {
+      @no-value;
+    }
+    /// The attribute may have a token sequence as a value.
+    attribute token-value {
+      @no-value;
+    }
+    /// The attribute may have a value matching an exact token.
+    attribute value {
+      @identifier-value;
+    }
 
-		/// An attribute may allow for mutliple different kinds of values to
-		/// be accepted.
-		children {
-			@attribute no-value;
-			@attribute text-value;
-			@attribute integer-value;
-			@attribute float-value;
-			@attribute identifier-value;
-			@attribute path-value;
-			/// Generic token values and explict tokens can't be mixed for an
-			/// attribute.
-			children {
-				@minimum 1;
-				@maximum 1;
-				@attribute token-value;
-				@attribute value-value;
-			}
-		}
-	}
+    /// An attribute may allow for mutliple different kinds of values to
+    /// be accepted.
+    children {
+      @attribute no-value;
+      @attribute text-value;
+      @attribute integer-value;
+      @attribute float-value;
+      @attribute identifier-value;
+      @attribute path-value;
+      /// Generic token values and explict tokens can't be mixed for an
+      /// attribute.
+      children {
+        @minimum 1;
+        @maximum 1;
+        @attribute token-value;
+        @attribute value-value;
+      }
+    }
+  }
 
-	/// Children that a node may have in no particular order.
-	node children {
-		@name disallowed;
+  /// Children that a node may have in no particular order.
+  node children {
+    @name disallowed;
 
-		/// The minimum number of matching children.
-		attribute minimum {
-			@integer-value;
-		}
-		/// The maximum number of matching children.
-		attribute maximum {
-			@integer-value;
-		}
+    /// The minimum number of matching children.
+    attribute minimum {
+      @integer-value;
+    }
+    /// The maximum number of matching children.
+    attribute maximum {
+      @integer-value;
+    }
 
-		/// The name of a node that may appear in the element.
-		attribute node {
-			@path-value;
-		}
-		/// The name of an attribute that may appear in the element.
-		attribute attribute {
-			@identifier-value;
-		}
+    /// The name of a node that may appear in the element.
+    attribute node {
+      @path-value;
+    }
+    /// The name of an attribute that may appear in the element.
+    attribute attribute {
+      @identifier-value;
+    }
 
-		children {
-			@maximum 1;
-			@attribute minimum;
-		}
-		children {
-			@maximum 1;
-			@attribute maximum;
-		}
-		children {
-			@minimum 1;
-			@maximum 1;
-			@attribute exactly;
-			@attribute at-least;
-			@attribute optional;
-			@attribute default;
-		}
-		children {
-			@node ::del-schema::children;
-			@node ::del-schema::ordered-children;
-			@attribute node;
-			@attribute attribute;
-		}
-	}
+    children {
+      @maximum 1;
+      @attribute minimum;
+    }
+    children {
+      @maximum 1;
+      @attribute maximum;
+    }
+    children {
+      @minimum 1;
+      @maximum 1;
+      @attribute exactly;
+      @attribute at-least;
+      @attribute optional;
+      @attribute default;
+    }
+    children {
+      @node ::del-schema::children;
+      @node ::del-schema::ordered-children;
+      @attribute node;
+      @attribute attribute;
+    }
+  }
 
-	/// Children appearing in a particular order.
-	node ordered-children {
-		@name disallowed;
+  /// Children appearing in a particular order.
+  node ordered-children {
+    @name disallowed;
 
-		/// The name of a node that may appear in the element.
-		attribute node {
-			@path-value;
-		}
-		/// The name of an attribute that may appear in the element.
-		attribute attribute {
-			@identifier-value;
-		}
+    /// The name of a node that may appear in the element.
+    attribute node {
+      @path-value;
+    }
+    /// The name of an attribute that may appear in the element.
+    attribute attribute {
+      @identifier-value;
+    }
 
-		children {
-			@node ::del-schema::children;
-			@attribute node;
-			@attribute attribute;
-		}
-	}
+    children {
+      @node ::del-schema::children;
+      @attribute node;
+      @attribute attribute;
+    }
+  }
 }
 ```
