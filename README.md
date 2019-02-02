@@ -206,8 +206,12 @@ A validation schema may be written in DEL as follows.
     .del.attribute text-value {
       @no-value;
     }
-    /// The attribute may have an integer value.
-    .del.attribute integer-value {
+    /// The attribute may have a signed integer value.
+    .del.attribute signed-value {
+      @no-value;
+    }
+    /// The attribute may have an unsigned integer value.
+    .del.attribute unsigned-value {
       @no-value;
     }
     /// The attribute may have a floating-point value.
@@ -243,7 +247,8 @@ A validation schema may be written in DEL as follows.
       .del.children {
         @attribute no-value;
         @attribute text-value;
-        @attribute integer-value;
+        @attribute signed-value;
+        @attribute unsigned-value;
         @attribute float-value;
         @attribute identifier-value;
         @attribute path-value;
