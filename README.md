@@ -273,14 +273,6 @@ schema del-schema {
       @attribute maximum;
     }
     children {
-      @minimum 1;
-      @maximum 1;
-      @attribute exactly;
-      @attribute at-least;
-      @attribute optional;
-      @attribute default;
-    }
-    children {
       @node ::del-schema::children;
       @node ::del-schema::ordered-children;
       @attribute node;
