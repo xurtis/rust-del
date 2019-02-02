@@ -1,0 +1,7 @@
+[package]
+name = "del"
+version = "0.1.0"
+authors = ["Curtis Millar <curtis@curtism.me>"]
+edition = "2018"
+
+[dependencies]
